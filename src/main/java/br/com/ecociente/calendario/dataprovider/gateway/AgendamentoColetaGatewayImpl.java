@@ -3,6 +3,8 @@ package br.com.ecociente.calendario.dataprovider.gateway;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
@@ -37,11 +39,9 @@ public class AgendamentoColetaGatewayImpl implements AgendamentoColetaGateway {
   }
 
   @Override
-  public List<AgendamentoColeta> buscarTodos() {
-    List<AgendamentoColetaEntity> entities = agendamentoColetaRepository.findAll();
-    return entities.stream()
-        .map(agendamentoColetaMapper::toDomain)
-        .toList();
+  public Page<AgendamentoColeta> buscarTodos(Pageable pageable) {
+    Page<AgendamentoColetaEntity> entities = agendamentoColetaRepository.findAll(pageable);
+    return entities.map(agendamentoColetaMapper::toDomain);
   }
 
   @Override
