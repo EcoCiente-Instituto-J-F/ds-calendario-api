@@ -8,7 +8,7 @@ public record CalendarioResponseDto(
   Integer id,
   LocalDateTime dataInicio,
   LocalDateTime dataFim,
-  StatusType status,
+  StatusType statusAgendamento,
   Boolean possuiRecorrencia
 ) {
 }

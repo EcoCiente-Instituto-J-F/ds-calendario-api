@@ -6,14 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RecorrenciaAgendamentoEntity {
+public class RecorrenciaAgendamento {
   private Integer id;
   private AgendamentoColeta agendamentoColeta;
   private DiaSemanaType diaSemana;
