@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
+import br.com.ecociente.calendario.core.domain.AgendamentoFiltro;
 import br.com.ecociente.calendario.core.gateway.AgendamentoColetaGateway;
 import br.com.ecociente.calendario.core.mapper.AgendamentoColetaMapper;
 import br.com.ecociente.calendario.dataprovider.entity.AgendamentoColetaEntity;
@@ -38,16 +39,30 @@ public class AgendamentoColetaGatewayImpl implements AgendamentoColetaGateway {
   }
 
   @Override
-  public Page<AgendamentoColeta> buscarPorSindico(Integer usuarioId, Pageable pageable) {
+  public Page<AgendamentoColeta> buscarPorSindico(Integer usuarioId, AgendamentoFiltro filtro, Pageable pageable) {
     return agendamentoColetaRepository
-            .buscarPorSindico(usuarioId, pageable)
+            .buscarPorSindico(
+              usuarioId, 
+              filtro.status() == null ? null : filtro.status().name(),
+              filtro.dataInicio(),
+              filtro.dataFim(),
+              filtro.cooperativaId(),
+              filtro.possuiRecorrencia(),
+              pageable)
             .map(agendamentoColetaMapper::toDomain);
 }
 
   @Override
-  public Page<AgendamentoColeta> buscarPorCooperativa(Integer usuarioId, Pageable pageable) {
+  public Page<AgendamentoColeta> buscarPorCooperativa(Integer usuarioId, AgendamentoFiltro filtro, Pageable pageable) {
     return agendamentoColetaRepository
-            .buscarPorCooperativa(usuarioId, pageable)
+            .buscarPorCooperativa(
+              usuarioId, 
+              filtro.status() == null ? null : filtro.status().name(),
+              filtro.dataInicio(),
+              filtro.dataFim(),
+              filtro.condominioId(),
+              filtro.possuiRecorrencia(),
+              pageable)
             .map(agendamentoColetaMapper::toDomain);
 }
 
