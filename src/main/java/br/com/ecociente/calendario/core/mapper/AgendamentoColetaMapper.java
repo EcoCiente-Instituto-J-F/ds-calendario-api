@@ -9,9 +9,6 @@ import br.com.ecociente.calendario.dataprovider.entity.AgendamentoColetaEntity;
 @Component
 public class AgendamentoColetaMapper {
 
-  private AgendamentoColetaMapper() {
-  }
-
   public AgendamentoColeta toDomain(AgendamentoColetaEntity entity) {
 
     if (entity == null) {
