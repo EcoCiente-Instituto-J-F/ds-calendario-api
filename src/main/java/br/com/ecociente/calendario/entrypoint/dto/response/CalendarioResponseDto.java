@@ -6,6 +6,8 @@ import br.com.ecociente.calendario.core.domain.StatusType;
 
 public record CalendarioResponseDto(
   Integer id,
+  Integer condominioId,
+  Integer cooperativaId,
   LocalDateTime dataInicio,
   LocalDateTime dataFim,
   StatusType statusAgendamento,

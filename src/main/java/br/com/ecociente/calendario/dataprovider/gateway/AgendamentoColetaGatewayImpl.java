@@ -1,6 +1,5 @@
 package br.com.ecociente.calendario.dataprovider.gateway;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -39,9 +38,29 @@ public class AgendamentoColetaGatewayImpl implements AgendamentoColetaGateway {
   }
 
   @Override
-  public Page<AgendamentoColeta> buscarTodos(Pageable pageable) {
-    Page<AgendamentoColetaEntity> entities = agendamentoColetaRepository.findAll(pageable);
-    return entities.map(agendamentoColetaMapper::toDomain);
+  public Page<AgendamentoColeta> buscarPorSindico(Integer usuarioId, Pageable pageable) {
+    return agendamentoColetaRepository
+            .buscarPorSindico(usuarioId, pageable)
+            .map(agendamentoColetaMapper::toDomain);
+}
+
+  @Override
+  public Page<AgendamentoColeta> buscarPorCooperativa(Integer usuarioId, Pageable pageable) {
+    return agendamentoColetaRepository
+            .buscarPorCooperativa(usuarioId, pageable)
+            .map(agendamentoColetaMapper::toDomain);
+}
+
+  @Override
+  public Optional<AgendamentoColeta> buscarProximoAgendamentoPorSindico(Integer usuarioId) {
+    return agendamentoColetaRepository.buscarProximoAgendamentoPorSindico(usuarioId)
+            .map(agendamentoColetaMapper::toDomain);
+  }
+
+  @Override
+  public Optional<AgendamentoColeta> buscarProximoAgendamentoPorCooperativa(Integer usuarioId) {
+    return agendamentoColetaRepository.buscarProximoAgendamentoPorCooperativa(usuarioId)
+            .map(agendamentoColetaMapper::toDomain);
   }
 
   @Override

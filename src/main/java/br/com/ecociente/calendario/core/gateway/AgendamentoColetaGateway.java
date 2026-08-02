@@ -10,7 +10,10 @@ import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
 
 public interface AgendamentoColetaGateway {
   AgendamentoColeta salvar (AgendamentoColeta agendamentoColeta);
-  Page<AgendamentoColeta> buscarTodos(Pageable pageable);
+  Page<AgendamentoColeta> buscarPorSindico(Integer usuarioId, Pageable pageable);
+  Page<AgendamentoColeta> buscarPorCooperativa(Integer usuarioId, Pageable pageable);
+  Optional<AgendamentoColeta> buscarProximoAgendamentoPorSindico(Integer usuarioId);
+  Optional<AgendamentoColeta> buscarProximoAgendamentoPorCooperativa(Integer usuarioId);
   Optional<AgendamentoColeta> buscarPorId(Integer id);
   AgendamentoColeta atualizar(Integer id, AgendamentoColeta agendamentoColeta);
   void deletar(Integer id);
