@@ -23,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,8 +51,8 @@ public class AgendamentoController {
   public ResponseEntity<Page<CalendarioResponseDto>> listarAgendamentos(
     @AuthenticationPrincipal JwtUsuario usuario,
     @RequestParam(required = false) StatusType status,
-    @RequestParam(required = false) LocalDateTime dataInicio,
-    @RequestParam(required = false) LocalDateTime dataFim,
+    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicio,
+    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFim,
     @RequestParam(required = false) Boolean possuiRecorrencia,
     @RequestParam(required = false) Integer condominioId,
     @RequestParam(required = false) Integer cooperativaId,
@@ -77,8 +78,8 @@ public class AgendamentoController {
   })
   public ResponseEntity<CalendarioResponseDto> buscarProximoAgendamento(
     @AuthenticationPrincipal JwtUsuario usuario,
-    @RequestParam(required = false) LocalDateTime dataInicio,
-    @RequestParam(required = false) LocalDateTime dataFim,
+    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicio,
+    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFim,
     @RequestParam(required = false) Boolean possuiRecorrencia,
     @RequestParam(required = false) Integer condominioId,
     @RequestParam(required = false) Integer cooperativaId

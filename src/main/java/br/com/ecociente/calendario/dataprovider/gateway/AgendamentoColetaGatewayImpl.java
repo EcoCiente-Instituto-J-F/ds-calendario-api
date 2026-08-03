@@ -67,20 +67,26 @@ public class AgendamentoColetaGatewayImpl implements AgendamentoColetaGateway {
 }
 
   @Override
-  public Optional<AgendamentoColeta> buscarProximoAgendamentoPorSindico(Integer usuarioId) {
-    return agendamentoColetaRepository.buscarProximoAgendamentoPorSindico(usuarioId)
-            .map(agendamentoColetaMapper::toDomain);
+  public Optional<AgendamentoColeta> buscarProximoAgendamentoPorSindico(Integer usuarioId, AgendamentoFiltro filtro) {
+    return agendamentoColetaRepository.buscarProximoAgendamentoPorSindico(
+      usuarioId,
+      filtro.dataInicio(),
+      filtro.dataFim(),
+      filtro.possuiRecorrencia(),
+      filtro.cooperativaId()
+    )
+    .map(agendamentoColetaMapper::toDomain);
   }
 
   @Override
-  public Optional<AgendamentoColeta> buscarProximoAgendamentoPorCooperativa(Integer usuarioId) {
-    return agendamentoColetaRepository.buscarProximoAgendamentoPorCooperativa(usuarioId)
-            .map(agendamentoColetaMapper::toDomain);
-  }
-
-  @Override
-  public Optional<AgendamentoColeta> buscarPorId(Integer id) {
-    return agendamentoColetaRepository.findById(id)
+  public Optional<AgendamentoColeta> buscarProximoAgendamentoPorCooperativa(Integer usuarioId, AgendamentoFiltro filtro) {
+    return agendamentoColetaRepository.buscarProximoAgendamentoPorCooperativa(
+      usuarioId,
+      filtro.dataInicio(),
+      filtro.dataFim(),
+      filtro.possuiRecorrencia(),
+      filtro.condominioId()
+    )
     .map(agendamentoColetaMapper::toDomain);
   }
 
