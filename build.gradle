@@ -54,3 +54,13 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.withType(JavaCompile).configureEach{
+    options.forkOptions.jvmArgs - '-Djava.io.tmpdir=' + buildDir
+    doFirst{
+        def outputDir = file("${buildDir}/classes/java/main")
+        if(outputDir.exists() && !outputDir.deleteDir()){
+            logger.warm("Aviso: nao foi possivel limpar ${outputDir} - possivel lock do OneDrive. Feche o OneDrive ou mova o projeto para fora do Desktop sincronizado.")
+        }
+    }
+}
