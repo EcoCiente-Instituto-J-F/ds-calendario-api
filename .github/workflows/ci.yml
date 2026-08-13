@@ -26,6 +26,31 @@ jobs:
 
     timeout-minutes: 15
 
+    services:
+      postgres:
+        image: postgres:16-alpine
+
+        env:
+          POSTGRES_DB: calendario_test
+          POSTGRES_USER: calendario
+          POSTGRES_PASSWORD: calendario
+
+        ports:
+          - 5432:5432
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      DB_URL: jdbc:postgresql://localhost:5432/calendario_test
+      DB_USER: calendario
+      DB_PASSWORD: calendario
+      JWT_SECRET: ecociente-ci-test-secret-key-0123456789
+      SPRING_JPA_HIBERNATE_DDLAUTO: create-drop
+
     steps:
       - name: Baixar codigo do repositorio
         uses: actions/checkout@v7
