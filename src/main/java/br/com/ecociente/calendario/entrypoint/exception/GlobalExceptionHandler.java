@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -112,4 +113,31 @@ public class GlobalExceptionHandler {
     var response = createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "ERRO_INTERNO", details);
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
   }
+
+  @ExceptionHandler(BindException.class)
+public ResponseEntity<ErrorResponse> handleBindException(
+    BindException ex,
+    WebRequest request) {
+
+    log.warn("Parâmetro inválido: {}", ex.getMessage());
+
+    List<ValidationError> details = ex.getBindingResult()
+        .getFieldErrors()
+        .stream()
+        .map(error -> new ValidationError(
+            error.getField(),
+            "Valor inválido para o parâmetro: " + error.getField()
+        ))
+        .toList();
+
+    var response = createErrorResponse(
+        HttpStatus.BAD_REQUEST,
+        "PARAMETRO_INVALIDO",
+        details
+    );
+
+    return ResponseEntity
+        .status(HttpStatus.BAD_REQUEST)
+        .body(response);
+}
 }
