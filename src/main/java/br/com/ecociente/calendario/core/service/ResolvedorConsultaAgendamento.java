@@ -2,11 +2,14 @@ package br.com.ecociente.calendario.core.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import br.com.ecociente.calendario.core.domain.Perfil;
 import br.com.ecociente.calendario.core.exception.PerfilNaoAutorizadoException;
 import br.com.ecociente.calendario.core.usecase.ConsultaAgendamentoPorPerfil;
 import lombok.RequiredArgsConstructor;
 
+@Component
 @RequiredArgsConstructor
 public class ResolvedorConsultaAgendamento {
   

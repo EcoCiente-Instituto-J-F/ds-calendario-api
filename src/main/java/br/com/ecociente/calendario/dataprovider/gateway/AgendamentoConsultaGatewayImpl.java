@@ -12,7 +12,7 @@ import br.com.ecociente.calendario.core.gateway.AgendamentoConsultaGateway;
 import br.com.ecociente.calendario.core.mapper.AgendamentoColetaMapper;
 
 import br.com.ecociente.calendario.dataprovider.repository.AgendamentoColetaRepository;
-import br.com.ecociente.calendario.dataprovider.repository.StatusAgendamentoRepository;
+
 
 @Component
 public class AgendamentoConsultaGatewayImpl implements AgendamentoConsultaGateway {
@@ -20,7 +20,7 @@ public class AgendamentoConsultaGatewayImpl implements AgendamentoConsultaGatewa
   private final AgendamentoColetaRepository agendamentoColetaRepository;
   private final AgendamentoColetaMapper agendamentoColetaMapper;
 
-  public AgendamentoConsultaGatewayImpl(AgendamentoColetaRepository agendamentoColetaRepository, AgendamentoColetaMapper agendamentoColetaMapper, StatusAgendamentoRepository statusAgendamentoRepository) {
+  public AgendamentoConsultaGatewayImpl(AgendamentoColetaRepository agendamentoColetaRepository, AgendamentoColetaMapper agendamentoColetaMapper) {
     this.agendamentoColetaRepository = agendamentoColetaRepository;
     this.agendamentoColetaMapper = agendamentoColetaMapper;
   }
