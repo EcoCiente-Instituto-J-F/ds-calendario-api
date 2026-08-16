@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "dias_semanas")
+@Table(name = "tb_lkp_dias_semanas")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -10,6 +10,7 @@ import br.com.ecociente.calendario.core.domain.StatusType;
 import br.com.ecociente.calendario.core.usecase.BuscarProximaVisitaUseCase;
 import br.com.ecociente.calendario.core.usecase.ListarAgendamentosUseCase;
 import br.com.ecociente.calendario.entrypoint.dto.response.CalendarioResponseDto;
+import br.com.ecociente.calendario.entrypoint.mapper.AgendamentoFiltroMapper;
 import br.com.ecociente.calendario.entrypoint.mapper.CalendarioResponseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,6 +37,7 @@ public class AgendamentoController {
   private final ListarAgendamentosUseCase listarAgendamentosUseCase;
   private final BuscarProximaVisitaUseCase buscarProximoAgendamentoUsecase;
   private final CalendarioResponseMapper calendarioResponseMapper;
+  private final AgendamentoFiltroMapper agendamentoFiltroMapper;
 
   @GetMapping
   @Operation(
@@ -57,11 +59,12 @@ public class AgendamentoController {
     @RequestParam(required = false) Integer condominioId,
     @RequestParam(required = false) Integer cooperativaId,
     @PageableDefault(size = 10,sort ="dataInicio", direction = Sort.Direction.ASC) Pageable pageable){
-      AgendamentoFiltro filtro = new AgendamentoFiltro(status, dataInicio, dataFim,condominioId, cooperativaId, possuiRecorrencia);
+      AgendamentoFiltro filtro = agendamentoFiltroMapper.toDomain(status,dataInicio,dataFim,condominioId,cooperativaId,possuiRecorrencia);
       Page<CalendarioResponseDto> response = listarAgendamentosUseCase
-      .executar(usuario.usuarioId(),usuario.perfil(), filtro, pageable)
-      .map(calendarioResponseMapper :: toResponseDto);
-      return ResponseEntity.ok(response);
+        .executar(usuario.usuarioId(), usuario.perfil(), filtro, pageable)
+        .map(calendarioResponseMapper::toResponseDto);
+        return ResponseEntity.ok(response);
+
   }
 
   @GetMapping("/proxima")
@@ -84,10 +87,11 @@ public class AgendamentoController {
     @RequestParam(required = false) Integer condominioId,
     @RequestParam(required = false) Integer cooperativaId
   ){
-    AgendamentoFiltro filtro = new AgendamentoFiltro(null,dataInicio, dataFim,condominioId, cooperativaId, possuiRecorrencia);
-    return buscarProximoAgendamentoUsecase.executar(usuario.usuarioId(), filtro, usuario.perfil())
-      .map(calendarioResponseMapper :: toResponseDto)
-      .map(ResponseEntity :: ok)
+    AgendamentoFiltro filtro = agendamentoFiltroMapper.toDomain(null,dataInicio,dataFim, condominioId, cooperativaId, possuiRecorrencia);
+    return buscarProximoAgendamentoUsecase
+      .executar(usuario.usuarioId(), filtro, usuario.perfil())
+      .map(calendarioResponseMapper::toResponseDto)
+      .map(ResponseEntity::ok)
       .orElse(ResponseEntity.notFound().build());
   } 
   

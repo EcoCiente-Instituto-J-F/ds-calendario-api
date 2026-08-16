@@ -46,7 +46,7 @@ public class AgendamentoColetaGatewayImplTest {
   private StatusAgendamentoRepository statusAgendamentoRepository;
 
   @InjectMocks
-  private AgendamentoColetaGatewayImpl agendamentoColetaGateway;
+  private AgendamentoConsultaGatewayImpl agendamentoColetaGateway;
 
   private AgendamentoColetaEntity entity;
   private AgendamentoColeta domain;

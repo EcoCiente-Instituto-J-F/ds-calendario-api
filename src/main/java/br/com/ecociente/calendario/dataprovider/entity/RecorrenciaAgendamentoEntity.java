@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "recorrencias_agendamentos")
+@Table(name = "tb_rel_recorrencias_agendamentos")
 @Getter
 @Setter
 @NoArgsConstructor

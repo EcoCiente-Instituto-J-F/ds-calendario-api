@@ -27,18 +27,21 @@ import br.com.ecociente.calendario.config.security.JwtService;
 import br.com.ecociente.calendario.config.security.JwtUsuario;
 import br.com.ecociente.calendario.config.security.SecurityConfig;
 import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
+import br.com.ecociente.calendario.core.domain.Perfil;
 import br.com.ecociente.calendario.core.domain.StatusType;
 import br.com.ecociente.calendario.core.exception.PerfilNaoAutorizadoException;
 import br.com.ecociente.calendario.core.usecase.BuscarProximaVisitaUseCase;
 import br.com.ecociente.calendario.core.usecase.ListarAgendamentosUseCase;
 import br.com.ecociente.calendario.entrypoint.exception.GlobalExceptionHandler;
+import br.com.ecociente.calendario.entrypoint.mapper.AgendamentoFiltroMapper;
 import br.com.ecociente.calendario.entrypoint.mapper.CalendarioResponseMapper;
 
 @WebMvcTest(controllers = AgendamentoController.class)
 @Import({
     SecurityConfig.class,
     GlobalExceptionHandler.class,
-    CalendarioResponseMapper.class
+    CalendarioResponseMapper.class,
+    AgendamentoFiltroMapper.class
 })
 class AgendamentoControllerTest {
 
@@ -59,11 +62,11 @@ class AgendamentoControllerTest {
 
   @BeforeEach
   void setupSecurity() {
-    doReturn(new JwtUsuario(1, "SINDICO"))
+    doReturn(new JwtUsuario(1, Perfil.SINDICO))
         .when(jwtService)
         .validar(TOKEN_SINDICO);
 
-    doReturn(new JwtUsuario(2, "COOPERATIVA"))
+    doReturn(new JwtUsuario(2, Perfil.COOPERATIVA))
         .when(jwtService)
         .validar(TOKEN_COOPERATIVA);
   }
@@ -80,7 +83,7 @@ class AgendamentoControllerTest {
         .build();
   }
 
- @Nested
+@Nested
 @DisplayName("GET /api/v1/agendamentos")
 class ListarAgendamentos {
 

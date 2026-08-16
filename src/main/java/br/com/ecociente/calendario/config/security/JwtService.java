@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import br.com.ecociente.calendario.core.domain.Perfil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -30,6 +31,6 @@ public class JwtService {
     if (usuarioId == null || perfil == null) {
       throw new IllegalArgumentException("Claims obrigatórios não encontrados no token JWT");
     }
-    return new JwtUsuario(usuarioId, perfil);
+    return new JwtUsuario(usuarioId, Perfil.tipoPerfil(perfil));
   }
 }
