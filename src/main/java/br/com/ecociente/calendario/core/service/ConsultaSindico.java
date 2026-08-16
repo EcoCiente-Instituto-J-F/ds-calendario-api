@@ -1,0 +1,34 @@
+package br.com.ecociente.calendario.core.service;
+
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
+import br.com.ecociente.calendario.core.domain.AgendamentoFiltro;
+import br.com.ecociente.calendario.core.domain.Perfil;
+import br.com.ecociente.calendario.core.gateway.AgendamentoConsultaGateway;
+import br.com.ecociente.calendario.core.usecase.ConsultaAgendamentoPorPerfil;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class ConsultaSindico implements ConsultaAgendamentoPorPerfil{
+
+  private final AgendamentoConsultaGateway agendamentoConsultaGateway;
+
+  @Override
+  public Perfil perfilSuportado() {
+    return Perfil.SINDICO;
+  }
+  
+  @Override
+  public Page<AgendamentoColeta> listar(Integer usuarioId, AgendamentoFiltro filtro, Pageable pageable ){
+    return agendamentoConsultaGateway.buscarPorSindico(usuarioId, filtro, pageable);
+  }
+
+  @Override
+  public Optional<AgendamentoColeta> buscarProximo(Integer usuarioId, AgendamentoFiltro filtro){
+    return agendamentoConsultaGateway.buscarProximoAgendamentoPorSindico(usuarioId, filtro);
+  }
+}
