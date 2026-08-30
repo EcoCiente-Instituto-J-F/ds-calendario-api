@@ -1,0 +1,17 @@
+services:
+
+  calendario-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: ecociente-calendario:1.0.0
+    container_name: ecociente-calendario-api
+
+    ports:
+      - "9800:9800"
+
+    env_file:
+      - .env
+
+    restart: unless-stopped

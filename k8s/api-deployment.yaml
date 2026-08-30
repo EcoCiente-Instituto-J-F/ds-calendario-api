@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: calendario-api
+  namespace: ecociente
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: calendario-api
+
+  template:
+    metadata:
+      labels:
+        app: calendario-api
+
+    spec:
+      containers:
+        - name: calendario-api
+
+          image: ecociente/ecociente:calendario-1.0.0
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 9800
+
+          envFrom:
+            - configMapRef:
+                name: calendario-config
+
+            - secretRef:
+                name: calendario-secret
+
+          startupProbe:
+            tcpSocket:
+              port: 9800
+            periodSeconds: 5
+            failureThreshold: 30
+
+          readinessProbe:
+            tcpSocket:
+              port: 9800
+            periodSeconds: 10
+            failureThreshold: 3
+
+          livenessProbe:
+            tcpSocket:
+              port: 9800
+            periodSeconds: 20
+            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

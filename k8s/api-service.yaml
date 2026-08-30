@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: calendario-api-service
+  namespace: ecociente
+
+spec:
+  selector:
+    app: calendario-api
+
+  ports:
+    - protocol: TCP
+      port: 9800
+      targetPort: 9800
+
+  type: ClusterIP

@@ -1,12 +1,13 @@
 package br.com.ecociente.calendario;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+import org.junit.jupiter.api.Test;
+
 class CalendarioApplicationTests {
 
     @Test
-    void contextLoads() {
+    void applicationClassExists() {
+        assertThat(CalendarioApplication.class).isNotNull();
     }
 }

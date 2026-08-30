@@ -31,3 +31,9 @@ logs/
 
 # Spring Boot
 /target/
+
+# Kubernetes secrets
+k8s/secret.yaml
+
+# Compiled classes
+bin/
