@@ -27,9 +27,9 @@ import org.springframework.data.domain.Pageable;
 import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
 import br.com.ecociente.calendario.core.domain.AgendamentoFiltro;
 import br.com.ecociente.calendario.core.domain.StatusType;
-import br.com.ecociente.calendario.core.mapper.AgendamentoColetaMapper;
 import br.com.ecociente.calendario.dataprovider.entity.AgendamentoColetaEntity;
 import br.com.ecociente.calendario.dataprovider.entity.StatusAgendamentoEntity;
+import br.com.ecociente.calendario.dataprovider.mapper.AgendamentoColetaMapper;
 import br.com.ecociente.calendario.dataprovider.repository.AgendamentoColetaRepository;
 import br.com.ecociente.calendario.dataprovider.repository.StatusAgendamentoRepository;
 
@@ -89,7 +89,7 @@ public class AgendamentoColetaGatewayImplTest {
       AgendamentoFiltro filtro = new AgendamentoFiltro(null,null,null,null,null,null);
       Pageable pageable = PageRequest.of(0, 10);
 
-      when(agendamentoColetaRepository.buscarPorSindico(any(),any(),any(),any(),any(),any(),any()))
+      when(agendamentoColetaRepository.buscarPorSindico(any(),any(),any(),any(),any(),any(),any(),any()))
         .thenReturn(new PageImpl<>(List.of(entity)));
       when(agendamentoColetaMapper.toDomain(entity)).thenReturn(domain);
       
@@ -105,12 +105,12 @@ public class AgendamentoColetaGatewayImplTest {
       AgendamentoFiltro filtro = new AgendamentoFiltro( StatusType.AGENDADO,null,null,null,null,null);
       Pageable pageable = PageRequest.of(0,10);
 
-      when(agendamentoColetaRepository.buscarPorSindico(eq(1),eq("AGENDADO"),any(),any(),any(),any(),any()))
+      when(agendamentoColetaRepository.buscarPorSindico(eq(1),eq("AGENDADO"),any(),any(),any(),any(),any(),any()))
         .thenReturn(new PageImpl<>(List.of()));
       
       agendamentoColetaGateway.buscarPorSindico(1, filtro, pageable);
 
-      verify(agendamentoColetaRepository).buscarPorSindico(eq(1), eq("AGENDADO"),any(),any(),any(),any(),any());
+      verify(agendamentoColetaRepository).buscarPorSindico(eq(1), eq("AGENDADO"),any(),any(),any(),any(),any(),any());
     }
 
     @Test
@@ -119,12 +119,12 @@ public class AgendamentoColetaGatewayImplTest {
       AgendamentoFiltro filtro = new AgendamentoFiltro(null,null,null,null,null,null);
       Pageable pageable = PageRequest.of(0,10);
 
-      when(agendamentoColetaRepository.buscarPorSindico(any(),any(),any(),any(),any(),any(),any()))
+      when(agendamentoColetaRepository.buscarPorSindico(any(),any(),any(),any(),any(),any(),any(),any()))
         .thenReturn(new PageImpl<>(List.of()));
       
       agendamentoColetaGateway.buscarPorSindico(1, filtro, pageable);
 
-      verify(agendamentoColetaRepository).buscarPorSindico(eq(1),eq(null),any(),any(),any(),any(),any());
+      verify(agendamentoColetaRepository).buscarPorSindico(eq(1),eq(null),any(),any(),any(),any(),any(),any());
     }
   }
 
@@ -158,7 +158,7 @@ public class AgendamentoColetaGatewayImplTest {
     void shouldDelegateAndMapResultWhenFound() {
       AgendamentoFiltro filtro = new AgendamentoFiltro(null,null,null,null,null,null);
 
-      when(agendamentoColetaRepository.buscarProximoAgendamentoPorSindico(any(),any(),any(),any(),any()))
+      when(agendamentoColetaRepository.buscarProximoAgendamentoPorSindico(any(),any(),any(),any(),any(),any()))
         .thenReturn(Optional.of(entity));
       when(agendamentoColetaMapper.toDomain(entity)).thenReturn(domain);
 
@@ -173,7 +173,7 @@ public class AgendamentoColetaGatewayImplTest {
     void shouldReturnEmptyWhenNotFound() {
         AgendamentoFiltro filtro = new AgendamentoFiltro(null,null,null,null,null,null);
 
-      when(agendamentoColetaRepository.buscarProximoAgendamentoPorSindico(any(),any(),any(),any(),any()))
+      when(agendamentoColetaRepository.buscarProximoAgendamentoPorSindico(any(),any(),any(),any(),any(),any()))
         .thenReturn(Optional.empty());
       
       Optional<AgendamentoColeta> resultado = agendamentoColetaGateway.buscarProximoAgendamentoPorSindico(1, filtro);

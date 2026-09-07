@@ -15,29 +15,35 @@ public interface AgendamentoColetaRepository extends JpaRepository<AgendamentoCo
 
   @Query(value = """
     SELECT ac.*
-    FROM agendamentos_coletas ac
-    INNER JOIN condominios c 
+    FROM tb_agendamentos_coletas ac
+    INNER JOIN tb_condominios c 
         ON c.id_condominio = ac.condominio_id
-    INNER JOIN status_agendamentos sa
+    INNER JOIN tb_sindicos s 
+        ON s.id_sindico = c.sindico_id    
+    INNER JOIN tb_lkp_status_agendamentos sa
         ON sa.id_status = ac.status_agendamento_id        
-    WHERE c.sindico_usuario_id = :usuarioId
+    WHERE s.usuario_id = :usuarioId
         AND (:status IS NULL OR sa.nome_status = :status)
         AND (:dataInicio IS NULL OR ac.data_inicio >= :dataInicio)
         AND (:dataFim IS NULL OR ac.data_fim <= :dataFim)
+        AND (:condominioId IS NULL OR ac.condominio_id = :condominioId)
         AND (:cooperativaId IS NULL OR ac.cooperativa_id = :cooperativaId)
         AND (:possuiRecorrencia IS NULL OR ac.possui_recorrencia = :possuiRecorrencia)
     """,
     countQuery = """
     SELECT COUNT(*)
-    FROM agendamentos_coletas ac
-    INNER JOIN condominios c
+    FROM tb_agendamentos_coletas ac
+    INNER JOIN tb_condominios c
      ON c.id_condominio = ac.condominio_id
-    INNER JOIN status_agendamentos sa
+    INNER JOIN tb_sindicos s 
+        ON s.id_sindico = c.sindico_id    
+    INNER JOIN tb_lkp_status_agendamentos sa
         ON sa.id_status = ac.status_agendamento_id
-    WHERE c.sindico_usuario_id = :usuarioId
+    WHERE c.sindico_id = :usuarioId
         AND (:status IS NULL OR sa.nome_status = :status)
         AND (:dataInicio IS NULL OR ac.data_inicio >= :dataInicio)
         AND (:dataFim IS NULL OR ac.data_fim <= :dataFim)
+        AND (:condominioId IS NULL OR ac.condominio_id = :condominioId)
         AND (:cooperativaId IS NULL OR ac.cooperativa_id = :cooperativaId)
         AND (:possuiRecorrencia IS NULL OR ac.possui_recorrencia = :possuiRecorrencia)
     """,
@@ -47,6 +53,7 @@ public interface AgendamentoColetaRepository extends JpaRepository<AgendamentoCo
       @Param("status") String status,
       @Param("dataInicio") LocalDateTime dataInicio,
       @Param("dataFim") LocalDateTime dataFim,
+      @Param("condominioId") Integer condominioId,
       @Param("cooperativaId") Integer cooperativaId,
       @Param("possuiRecorrencia") Boolean possuiRecorrencia,
       Pageable pageable);
@@ -54,10 +61,12 @@ public interface AgendamentoColetaRepository extends JpaRepository<AgendamentoCo
 
  @Query(value = """
      SELECT ac.*
-      FROM agendamentos_coletas ac
-      INNER JOIN cooperativas co
+      FROM tb_agendamentos_coletas ac
+      INNER JOIN tb_cooperativas co
           ON co.id_cooperativa = ac.cooperativa_id
-      INNER JOIN status_agendamentos sa
+      INNER JOIN tb_condominios c
+          ON c.id_condominio = ac.condominio_id    
+      INNER JOIN tb_lkp_status_agendamentos sa
           ON sa.id_status = ac.status_agendamento_id    
       WHERE co.usuario_id = :usuarioId
           AND (:status IS NULL OR sa.nome_status = :status)
@@ -68,12 +77,15 @@ public interface AgendamentoColetaRepository extends JpaRepository<AgendamentoCo
       """,
       countQuery = """
       SELECT COUNT(*)
-      FROM agendamentos_coletas ac
-      INNER JOIN cooperativas co
+      FROM tb_agendamentos_coletas ac
+      INNER JOIN tb_cooperativas co
           ON co.id_cooperativa = ac.cooperativa_id
-      INNER JOIN status_agendamentos sa
+      INNER JOIN tb_condominios c
+          ON c.id_condominio = ac.condominio_id    
+      INNER JOIN tb_lkp_status_agendamentos sa
           ON sa.id_status = ac.status_agendamento_id        
       WHERE co.usuario_id = :usuarioId
+          AND (:condominioId IS NULL OR ac.condominio_id = :condominioId)  
           AND (:status IS NULL OR sa.nome_status = :status)
           AND (:dataInicio IS NULL OR ac.data_inicio >= :dataInicio)
           AND (:dataFim IS NULL OR ac.data_fim <= :dataFim)
@@ -92,12 +104,12 @@ public interface AgendamentoColetaRepository extends JpaRepository<AgendamentoCo
 
   @Query(value = """
     SELECT ac.*
-    FROM agendamentos_coletas ac
-    INNER JOIN condominios c 
+    FROM tb_agendamentos_coletas ac
+    INNER JOIN tb_condominios c 
         ON c.id_condominio = ac.condominio_id
-    INNER JOIN status_agendamentos sa
+    INNER JOIN tb_lkp_status_agendamentos sa
         ON sa.id_status = ac.status_agendamento_id    
-    WHERE c.sindico_usuario_id = :usuarioId
+    WHERE c.sindico_id = :usuarioId
         AND sa.nome_status <> 'CANCELADO'
         AND sa.nome_status <> 'REALIZADO'
         AND ac.data_inicio > NOW()
@@ -113,22 +125,23 @@ public interface AgendamentoColetaRepository extends JpaRepository<AgendamentoCo
     @Param("usuarioId") Integer usuarioId, 
     @Param("dataInicio") LocalDateTime dataInicio,
     @Param("dataFim") LocalDateTime dataFim,
+    @Param("condominioId") Integer condominioId,
     @Param("possuiRecorrencia") Boolean possuiRecorrencia, 
     @Param("cooperativaId") Integer cooperativaId);
 
   @Query(value = """
     SELECT ac.*
-    FROM agendamentos_coletas ac
-    INNER JOIN cooperativas co
+    FROM tb_agendamentos_coletas ac
+    INNER JOIN tb_cooperativas co
         ON co.id_cooperativa = ac.cooperativa_id
-    INNER JOIN status_agendamentos sa
+    INNER JOIN tb_lkp_status_agendamentos sa
         ON sa.id_status = ac.status_agendamento_id    
     WHERE co.usuario_id = :usuarioId
         AND sa.nome_status <> 'CANCELADO'
         AND sa.nome_status <> 'REALIZADO'
         AND ac.data_inicio > NOW()
         AND (:possuiRecorrencia IS NULL OR ac.possui_recorrencia = :possuiRecorrencia)
-        AND (:cooperativaId IS NULL OR ac.condominio_id = :condominioId)
+        AND (:condominioId IS NULL OR ac.condominio_id = :condominioId)
         AND (:dataInicio IS NULL OR ac.data_inicio >= :dataInicio)
         AND (:dataFim IS NULL OR ac.data_fim <= :dataFim)
     ORDER BY ac.data_inicio

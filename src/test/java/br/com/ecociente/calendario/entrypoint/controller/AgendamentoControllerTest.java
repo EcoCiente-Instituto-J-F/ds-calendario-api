@@ -17,10 +17,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpHeaders;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import br.com.ecociente.calendario.config.security.JwtService;
@@ -30,8 +30,8 @@ import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
 import br.com.ecociente.calendario.core.domain.Perfil;
 import br.com.ecociente.calendario.core.domain.StatusType;
 import br.com.ecociente.calendario.core.exception.PerfilNaoAutorizadoException;
-import br.com.ecociente.calendario.core.usecase.BuscarProximaVisitaUseCase;
-import br.com.ecociente.calendario.core.usecase.ListarAgendamentosUseCase;
+import br.com.ecociente.calendario.core.service.BuscarProximaVisitaService;
+import br.com.ecociente.calendario.core.service.ListarAgendamentoService;
 import br.com.ecociente.calendario.entrypoint.exception.GlobalExceptionHandler;
 import br.com.ecociente.calendario.entrypoint.mapper.AgendamentoFiltroMapper;
 import br.com.ecociente.calendario.entrypoint.mapper.CalendarioResponseMapper;
@@ -48,13 +48,13 @@ class AgendamentoControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
-  @MockBean
-  private ListarAgendamentosUseCase listarAgendamentosUseCase;
+  @MockitoBean 
+  private ListarAgendamentoService listarAgendamentoService;
 
-  @MockBean
-  private BuscarProximaVisitaUseCase buscarProximaVisitaUseCase;
+  @MockitoBean 
+  private BuscarProximaVisitaService buscarProximaVisitaService;
 
-  @MockBean
+  @MockitoBean 
   private JwtService jwtService;
 
   private static final String TOKEN_SINDICO = "token-sindico";
@@ -90,7 +90,7 @@ class ListarAgendamentos {
   @Test
   @DisplayName("Deve retornar 200 com página de agendamentos")
   void shouldReturn200WithPageOfAgendamentos() throws Exception {
-    when(listarAgendamentosUseCase.executar(any(), any(), any(), any()))
+    when(listarAgendamentoService.executar(any(), any(), any(), any()))
         .thenReturn(new PageImpl<>(List.of(agendamento())));
 
     mockMvc.perform(get("/api/v1/agendamentos")
@@ -112,7 +112,7 @@ class ListarAgendamentos {
   @Test
   @DisplayName("Deve retornar 200 com página vazia quando não houver agendamentos")
   void shouldReturn200WithEmptyPageWhenNoAgendamentos() throws Exception {
-    when(listarAgendamentosUseCase.executar(any(), any(), any(), any()))
+    when(listarAgendamentoService.executar(any(), any(), any(), any()))
         .thenReturn(new PageImpl<>(List.of()));
 
     mockMvc.perform(get("/api/v1/agendamentos")
@@ -124,7 +124,7 @@ class ListarAgendamentos {
   @Test
   @DisplayName("Deve retornar 200 com filtros opcionais ausentes")
   void shouldReturn200WithoutOptionalFilters() throws Exception {
-    when(listarAgendamentosUseCase.executar(any(), any(), any(), any()))
+    when(listarAgendamentoService.executar(any(), any(), any(), any()))
         .thenReturn(new PageImpl<>(List.of()));
 
     mockMvc.perform(get("/api/v1/agendamentos")
@@ -147,7 +147,7 @@ class ListarAgendamentos {
   @Test
   @DisplayName("Deve aceitar data no formato ISO 8601")
   void shouldAcceptDateInISOFormat() throws Exception {
-    when(listarAgendamentosUseCase.executar(any(), any(), any(), any()))
+    when(listarAgendamentoService.executar(any(), any(), any(), any()))
         .thenReturn(new PageImpl<>(List.of()));
 
     mockMvc.perform(get("/api/v1/agendamentos")
@@ -169,7 +169,7 @@ class ListarAgendamentos {
   @Test
   @DisplayName("Deve retornar 403 quando use case lançar PerfilNaoAutorizadoException")
   void shouldReturn403WhenUseCaseThrowsPerfilNaoAutorizado() throws Exception {
-    when(listarAgendamentosUseCase.executar(any(), any(), any(), any()))
+    when(listarAgendamentoService.executar(any(), any(), any(), any()))
         .thenThrow(new PerfilNaoAutorizadoException("ADMIN"));
 
     mockMvc.perform(get("/api/v1/agendamentos")
@@ -183,7 +183,7 @@ class ListarAgendamentos {
   @Test
   @DisplayName("Deve retornar 500 e não vazar mensagem interna em erro genérico")
   void shouldReturn500AndNotLeakInternalMessageOnGenericError() throws Exception {
-    when(listarAgendamentosUseCase.executar(any(), any(), any(), any()))
+    when(listarAgendamentoService.executar(any(), any(), any(), any()))
         .thenThrow(new RuntimeException("Erro interno do banco"));
 
     mockMvc.perform(get("/api/v1/agendamentos")
@@ -211,7 +211,7 @@ class BuscarProximoAgendamento {
         .possuiRecorrencia(true)
         .build();
 
-    when(buscarProximaVisitaUseCase.executar(any(), any(), any()))
+    when(buscarProximaVisitaService.executar(any(), any(), any()))
         .thenReturn(Optional.of(agendamento));
 
     mockMvc.perform(get("/api/v1/agendamentos/proxima")
@@ -225,7 +225,7 @@ class BuscarProximoAgendamento {
   @Test
   @DisplayName("Deve retornar 404 quando não há próximo agendamento")
   void shouldReturn404WhenNoNextAgendamento() throws Exception {
-    when(buscarProximaVisitaUseCase.executar(any(), any(), any()))
+    when(buscarProximaVisitaService.executar(any(), any(), any()))
         .thenReturn(Optional.empty());
 
     mockMvc.perform(get("/api/v1/agendamentos/proxima")
@@ -236,7 +236,7 @@ class BuscarProximoAgendamento {
   @Test
   @DisplayName("Deve retornar 403 quando use case lançar PerfilNaoAutorizadoException")
   void shouldReturn403WhenUseCaseThrowsPerfilNaoAutorizado() throws Exception {
-    when(buscarProximaVisitaUseCase.executar(any(), any(), any()))
+    when(buscarProximaVisitaService.executar(any(), any(), any()))
         .thenThrow(new PerfilNaoAutorizadoException("ADMIN"));
 
     mockMvc.perform(get("/api/v1/agendamentos/proxima")
@@ -248,7 +248,7 @@ class BuscarProximoAgendamento {
   @Test
   @DisplayName("Deve aceitar filtros de data no formato ISO")
   void shouldAcceptDateFiltersInISOFormat() throws Exception {
-    when(buscarProximaVisitaUseCase.executar(any(), any(), any()))
+    when(buscarProximaVisitaService.executar(any(), any(), any()))
         .thenReturn(Optional.empty());
 
     mockMvc.perform(get("/api/v1/agendamentos/proxima")

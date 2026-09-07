@@ -1,30 +1,43 @@
 package br.com.ecociente.calendario.config.swagger;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Configuration
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Calendário de Coletas",
+                version = "1.0.0",
+                description = """
+                                API  para consulta de agendamnetos de coleta.
+                                O conteúdo retornado é definido pelo perfil do usuário autenticado:
+                                -SINDICO: agendamentos dos próprios condomínios;
+                                -COOPERATIVA: agendamentos associados á própria cooperativa
+                                """,
+                contact = @Contact(
+                        name = "Equipe EcoCiente")),
+        servers = {
+                @Server(
+                        url = "http://localhost:9800",
+                        description = "Ambiente local"
+                )
+        },
+        tags = {
+                @Tag(
+                      name = "Agendamentos",
+                      description = "Consultas de agendamnetos de coleta" )
+        })
+@SecurityScheme(
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT")
 public class SwaggerConfig {
-
-  @Bean
-public OpenAPI openAPI() {
-    return new OpenAPI()
-            .components(new Components()
-                    .addSecuritySchemes("bearerAuth",
-                            new SecurityScheme()
-                                    .type(SecurityScheme.Type.HTTP)
-                                    .scheme("bearer")
-                                    .bearerFormat("JWT")))
-            .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-            .info(new Info()
-                    .title("API Calendário de Coletas")
-                    .version("v1")
-                    .description("API responsável pelo gerenciamento dos agendamentos de coleta."));
-                  }
 }

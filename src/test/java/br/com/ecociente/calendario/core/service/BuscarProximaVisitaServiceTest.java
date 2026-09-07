@@ -18,7 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
 import br.com.ecociente.calendario.core.domain.AgendamentoFiltro;
 import br.com.ecociente.calendario.core.domain.Perfil;
-import br.com.ecociente.calendario.core.usecase.ConsultaAgendamentoPorPerfil;
 
 @ExtendWith(MockitoExtension.class)
 class BuscarProximaVisitaServiceTest {

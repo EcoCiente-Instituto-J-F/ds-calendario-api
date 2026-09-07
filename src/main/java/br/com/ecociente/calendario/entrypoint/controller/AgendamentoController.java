@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ecociente.calendario.config.security.JwtUsuario;
 import br.com.ecociente.calendario.core.domain.AgendamentoFiltro;
 import br.com.ecociente.calendario.core.domain.StatusType;
-import br.com.ecociente.calendario.core.usecase.BuscarProximaVisitaUseCase;
-import br.com.ecociente.calendario.core.usecase.ListarAgendamentosUseCase;
+import br.com.ecociente.calendario.core.service.BuscarProximaVisitaService;
+import br.com.ecociente.calendario.core.service.ListarAgendamentoService;
 import br.com.ecociente.calendario.entrypoint.dto.response.CalendarioResponseDto;
 import br.com.ecociente.calendario.entrypoint.mapper.AgendamentoFiltroMapper;
 import br.com.ecociente.calendario.entrypoint.mapper.CalendarioResponseMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,8 +35,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 @Tag(name = "Agendamento", description = "API responsável pelo gerenciamento dos agendamentos de coleta.")
 public class AgendamentoController {
-  private final ListarAgendamentosUseCase listarAgendamentosUseCase;
-  private final BuscarProximaVisitaUseCase buscarProximoAgendamentoUsecase;
+
+  private final BuscarProximaVisitaService buscarProximaVisitaService;
+  private final ListarAgendamentoService listarAgendamentoService;
   private final CalendarioResponseMapper calendarioResponseMapper;
   private final AgendamentoFiltroMapper agendamentoFiltroMapper;
 
@@ -47,20 +49,48 @@ public class AgendamentoController {
   )
   @ApiResponses({
     @ApiResponse(responseCode = "200", description = "Lista de agendamentos retornada com sucesso."),
+    @ApiResponse(responseCode = "400", description = "Parâmetros inválidos"),
     @ApiResponse(responseCode = "401", description = "Usuário não autenticado ou token inválido."),
     @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
   })
   public ResponseEntity<Page<CalendarioResponseDto>> listarAgendamentos(
     @AuthenticationPrincipal JwtUsuario usuario,
+
+    @Parameter(
+      description = "Filtra pelo status do agendamento",
+      example = "AGENDAMENTO")
     @RequestParam(required = false) StatusType status,
+
+    @Parameter(
+      description = "Data inicial do intervalo de buscar",
+      example = "2025-09-01T00:00:00")
     @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicio,
+
+    @Parameter(
+      description = "Data final do intervalo de busca",
+      example = "2025-09-30T23:59:59")
     @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFim,
+
+    @Parameter(
+      description = "Filtra agendamentos recorrentes ou não recorrentes",
+      example = "false")
     @RequestParam(required = false) Boolean possuiRecorrencia,
+
+    @Parameter(
+      description = "Filtra por condominio. Para SINDICO, o filtro é aplicado somente entre os condomínios vinculados ao usuário autenticado",
+      example = "10")
     @RequestParam(required = false) Integer condominioId,
+
+    @Parameter(
+      description = "Filtra pela cooperativa responsável. Para SINDICO o resultado continua limitado aos condomínios vinculados ao usuário autenticado",
+      example = "5")
     @RequestParam(required = false) Integer cooperativaId,
+
+    @Parameter(
+      description = "Parâmetros de paginação e ordenação")
     @PageableDefault(size = 10,sort ="dataInicio", direction = Sort.Direction.ASC) Pageable pageable){
       AgendamentoFiltro filtro = agendamentoFiltroMapper.toDomain(status,dataInicio,dataFim,condominioId,cooperativaId,possuiRecorrencia);
-      Page<CalendarioResponseDto> response = listarAgendamentosUseCase
+      Page<CalendarioResponseDto> response = listarAgendamentoService
         .executar(usuario.usuarioId(), usuario.perfil(), filtro, pageable)
         .map(calendarioResponseMapper::toResponseDto);
         return ResponseEntity.ok(response);
@@ -76,8 +106,10 @@ public class AgendamentoController {
   )
   @ApiResponses({
     @ApiResponse(responseCode = "200", description = "Próximo agendamento retornado com sucesso."),
+    @ApiResponse (responseCode = "400", description = "Parâmetros inválidos"),
     @ApiResponse(responseCode = "401", description = "Usuário não autenticado ou token inválido."),
-    @ApiResponse(responseCode = "403", description = "Usuário não autorizado")
+    @ApiResponse(responseCode = "403", description = "Usuário não autorizado"),
+    @ApiResponse (responseCode = "404", description = "Nenhum próximo agendamento encontrado")
   })
   public ResponseEntity<CalendarioResponseDto> buscarProximoAgendamento(
     @AuthenticationPrincipal JwtUsuario usuario,
@@ -88,7 +120,7 @@ public class AgendamentoController {
     @RequestParam(required = false) Integer cooperativaId
   ){
     AgendamentoFiltro filtro = agendamentoFiltroMapper.toDomain(null,dataInicio,dataFim, condominioId, cooperativaId, possuiRecorrencia);
-    return buscarProximoAgendamentoUsecase
+    return buscarProximaVisitaService
       .executar(usuario.usuarioId(), filtro, usuario.perfil())
       .map(calendarioResponseMapper::toResponseDto)
       .map(ResponseEntity::ok)

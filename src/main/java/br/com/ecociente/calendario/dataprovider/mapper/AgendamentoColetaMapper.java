@@ -1,4 +1,4 @@
-package br.com.ecociente.calendario.core.mapper;
+package br.com.ecociente.calendario.dataprovider.mapper;
 
 import org.springframework.stereotype.Component;
 
