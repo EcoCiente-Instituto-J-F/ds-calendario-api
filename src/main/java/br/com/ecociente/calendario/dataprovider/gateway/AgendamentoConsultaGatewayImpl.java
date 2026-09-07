@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
 import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
 import br.com.ecociente.calendario.core.domain.AgendamentoFiltro;
 import br.com.ecociente.calendario.core.gateway.AgendamentoConsultaGateway;
-import br.com.ecociente.calendario.core.mapper.AgendamentoColetaMapper;
-
+import br.com.ecociente.calendario.dataprovider.mapper.AgendamentoColetaMapper;
 import br.com.ecociente.calendario.dataprovider.repository.AgendamentoColetaRepository;
 
 
@@ -34,6 +33,7 @@ public class AgendamentoConsultaGatewayImpl implements AgendamentoConsultaGatewa
               filtro.status() == null ? null : filtro.status().name(),
               filtro.dataInicio(),
               filtro.dataFim(),
+              filtro.condominioId(),
               filtro.cooperativaId(),
               filtro.possuiRecorrencia(),
               pageable)
@@ -60,6 +60,7 @@ public class AgendamentoConsultaGatewayImpl implements AgendamentoConsultaGatewa
       usuarioId,
       filtro.dataInicio(),
       filtro.dataFim(),
+      filtro.condominioId(),
       filtro.possuiRecorrencia(),
       filtro.cooperativaId()
     )

@@ -1,4 +1,4 @@
-package br.com.ecociente.calendario.core.usecase;
+package br.com.ecociente.calendario.core.service;
 
 import java.util.Optional;
 
@@ -12,7 +12,12 @@ import br.com.ecociente.calendario.core.domain.Perfil;
 public interface ConsultaAgendamentoPorPerfil {
   Perfil perfilSuportado();
 
-  Page<AgendamentoColeta> listar(Integer usuarioId, AgendamentoFiltro filtro, Pageable pageable);
+  Page<AgendamentoColeta> listar(
+    Integer usuarioId, 
+    AgendamentoFiltro filtro, 
+    Pageable pageable);
 
-  Optional<AgendamentoColeta> buscarProximo(Integer usuarioId, AgendamentoFiltro filtro);
+  Optional<AgendamentoColeta> buscarProximo(
+    Integer usuarioId, 
+    AgendamentoFiltro filtro);
 }

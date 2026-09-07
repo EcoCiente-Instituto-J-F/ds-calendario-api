@@ -22,7 +22,6 @@ import org.springframework.data.domain.Pageable;
 import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
 import br.com.ecociente.calendario.core.domain.AgendamentoFiltro;
 import br.com.ecociente.calendario.core.domain.Perfil;
-import br.com.ecociente.calendario.core.usecase.ConsultaAgendamentoPorPerfil;
 
 @ExtendWith(MockitoExtension.class)
 class ListarAgendamentosServiceTest {

@@ -10,7 +10,6 @@ import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
 import br.com.ecociente.calendario.core.domain.AgendamentoFiltro;
 import br.com.ecociente.calendario.core.domain.Perfil;
 import br.com.ecociente.calendario.core.gateway.AgendamentoConsultaGateway;
-import br.com.ecociente.calendario.core.usecase.ConsultaAgendamentoPorPerfil;
 import lombok.RequiredArgsConstructor;
 
 @Component

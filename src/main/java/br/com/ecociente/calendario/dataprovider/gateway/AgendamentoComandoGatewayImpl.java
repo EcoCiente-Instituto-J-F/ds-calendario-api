@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
 import br.com.ecociente.calendario.core.gateway.AgendamentoComandoGateway;
-import br.com.ecociente.calendario.core.mapper.AgendamentoColetaMapper;
 import br.com.ecociente.calendario.dataprovider.entity.AgendamentoColetaEntity;
 import br.com.ecociente.calendario.dataprovider.entity.StatusAgendamentoEntity;
+import br.com.ecociente.calendario.dataprovider.mapper.AgendamentoColetaMapper;
 import br.com.ecociente.calendario.dataprovider.repository.AgendamentoColetaRepository;
 import br.com.ecociente.calendario.dataprovider.repository.StatusAgendamentoRepository;
 

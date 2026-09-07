@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 import br.com.ecociente.calendario.core.domain.StatusType;
 
-public record ListarAgendamentoRequestDto(StatusType statusType, 
+public record ListarAgendamentoRequestDto(
+  StatusType statusType, 
   LocalDateTime dataInicio,
   LocalDateTime dataFim, 
   Integer condominioId,

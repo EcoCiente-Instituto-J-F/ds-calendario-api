@@ -12,14 +12,9 @@ import org.junit.jupiter.api.Test;
 
 import br.com.ecociente.calendario.core.domain.Perfil;
 import br.com.ecociente.calendario.core.exception.PerfilNaoAutorizadoException;
-import br.com.ecociente.calendario.core.usecase.ConsultaAgendamentoPorPerfil;
-
-
 
 class ResolvedorConsultaAgendamentoTest {
 
-
-  
   @Test
   @DisplayName("Deve retornar a estratégia correta quando o perfil for existente")
   void shouldReturnCorrectStrategyWhenPerfilIsSupported(){

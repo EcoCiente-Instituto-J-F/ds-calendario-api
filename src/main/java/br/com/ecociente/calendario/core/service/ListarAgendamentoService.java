@@ -8,17 +8,13 @@ import org.springframework.stereotype.Service;
 import br.com.ecociente.calendario.core.domain.AgendamentoColeta;
 import br.com.ecociente.calendario.core.domain.AgendamentoFiltro;
 import br.com.ecociente.calendario.core.domain.Perfil;
-import br.com.ecociente.calendario.core.usecase.ConsultaAgendamentoPorPerfil;
-import br.com.ecociente.calendario.core.usecase.ListarAgendamentosUseCase;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ListarAgendamentoService implements ListarAgendamentosUseCase {
+public class ListarAgendamentoService {
 
   private final ResolvedorConsultaAgendamento resolvedor;
-
-    @Override
     public Page<AgendamentoColeta> executar(
             Integer usuarioId,
             Perfil perfil,
