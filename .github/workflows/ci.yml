@@ -39,7 +39,7 @@ jobs:
           - 5432:5432
 
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U calendario -d calendario_test"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -49,7 +49,7 @@ jobs:
       DB_USER: calendario
       DB_PASSWORD: calendario
       JWT_SECRET: ecociente-ci-test-secret-key-0123456789
-      DDL_AUTO: create-drop
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
 
     steps:
       - name: Baixar codigo do repositorio
