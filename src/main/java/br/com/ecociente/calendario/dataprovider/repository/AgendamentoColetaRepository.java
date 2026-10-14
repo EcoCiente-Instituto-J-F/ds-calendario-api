@@ -39,7 +39,7 @@ public interface AgendamentoColetaRepository extends JpaRepository<AgendamentoCo
         ON s.id_sindico = c.sindico_id    
     INNER JOIN tb_lkp_status_agendamentos sa
         ON sa.id_status = ac.status_agendamento_id
-    WHERE c.sindico_id = :usuarioId
+    WHERE s.usuario_id = :usuarioId
         AND (:status IS NULL OR sa.nome_status = :status)
         AND (:dataInicio IS NULL OR ac.data_inicio >= :dataInicio)
         AND (:dataFim IS NULL OR ac.data_fim <= :dataFim)
@@ -107,13 +107,16 @@ public interface AgendamentoColetaRepository extends JpaRepository<AgendamentoCo
     FROM tb_agendamentos_coletas ac
     INNER JOIN tb_condominios c 
         ON c.id_condominio = ac.condominio_id
+    INNER JOIN tb_sindicos s
+        ON s.id_sindico = c.sindico_id
     INNER JOIN tb_lkp_status_agendamentos sa
         ON sa.id_status = ac.status_agendamento_id    
-    WHERE c.sindico_id = :usuarioId
+    WHERE s.usuario_id = :usuarioId
         AND sa.nome_status <> 'CANCELADO'
         AND sa.nome_status <> 'REALIZADO'
         AND ac.data_inicio > NOW()
         AND (:possuiRecorrencia IS NULL OR ac.possui_recorrencia = :possuiRecorrencia)
+        AND (:condominioId IS NULL OR ac.condominio_id = :condominioId)
         AND (:cooperativaId IS NULL OR ac.cooperativa_id = :cooperativaId)
         AND (:dataInicio IS NULL OR ac.data_inicio >= :dataInicio)
         AND (:dataFim IS NULL OR ac.data_fim <= :dataFim)
