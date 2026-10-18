@@ -8,23 +8,46 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-  
+
   @Bean
-  SecurityFilterChain securityFilterChain(HttpSecurity http, JwtService jwtService) throws Exception {
+  SecurityFilterChain securityFilterChain(
+      HttpSecurity http,
+      JwtService jwtService) throws Exception {
+
     return http
-    .csrf(csrf -> csrf.disable())
-    .sessionManagement(session -> session
-      .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-    .authorizeHttpRequests(auth -> auth
-      .requestMatchers("/actuator/health","/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/v3/api-docs.yaml")  
-      .permitAll()
-      .anyRequest()
-      .authenticated())
-    .addFilterBefore(
-      new JwtAuthenticationFilter(jwtService), UsernamePasswordAuthenticationFilter.class)
-    .build();
+        .csrf(csrf -> csrf.disable())
+        .formLogin(form -> form.disable())
+        .httpBasic(basic -> basic.disable())
+        .requestCache(cache -> cache.disable())
+        .sessionManagement(session -> session
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers(
+                "/actuator/health",
+                "/swagger-ui.html",
+                "/swagger-ui/**",
+                "/v3/api-docs",
+                "/v3/api-docs/**",
+                "/v3/api-docs.yaml",
+                "/api-docs",
+                "/api-docs/**")
+            .permitAll()
+            .anyRequest().authenticated())
+        .exceptionHandling(errors -> errors
+            .authenticationEntryPoint((request, response, exception) -> response.sendError(
+                HttpServletResponse.SC_UNAUTHORIZED,
+                "Autenticação necessária"))
+            .accessDeniedHandler((request, response, exception) -> response.sendError(
+                HttpServletResponse.SC_FORBIDDEN,
+                "Acesso negado")))
+        .addFilterBefore(
+            new JwtAuthenticationFilter(jwtService),
+            UsernamePasswordAuthenticationFilter.class)
+        .build();
   }
 }
