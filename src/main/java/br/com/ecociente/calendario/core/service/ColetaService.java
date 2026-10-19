@@ -62,7 +62,7 @@ public class ColetaService {
 
     return gateway.criar(
         usuarioId,
-        sindico ? "SINDICO" : "COOPERATIVA",
+        sindico ? "CONDOMINIO" : "COOPERATIVA",
         entrada);
   }
 
@@ -142,7 +142,7 @@ public class ColetaService {
     }
 
     boolean destinatario = switch (coleta.origemSolicitacao()) {
-      case "SINDICO" -> cooperativa;
+      case "CONDOMINIO" -> cooperativa;
       case "COOPERATIVA" -> sindico;
       default -> throw invalido(
           "Origem da solicitação não reconhecida");
