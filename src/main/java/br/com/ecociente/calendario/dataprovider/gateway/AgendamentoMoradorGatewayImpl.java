@@ -36,6 +36,10 @@ public class AgendamentoMoradorGatewayImpl
              ac.data_inicio,
              ac.data_fim,
              ac.possui_recorrencia,
+             ac.solicitado_por_usuario_id,
+             ac.origem_solicitacao,
+             co.nome_cooperativa,
+             c.nome_condominio,
              sa.nome_status
       """;
 
@@ -43,6 +47,8 @@ public class AgendamentoMoradorGatewayImpl
       FROM tb_agendamentos_coletas ac
       JOIN tb_condominios c
         ON c.id_condominio = ac.condominio_id
+      LEFT JOIN tb_cooperativas co
+        ON co.id_cooperativa = ac.cooperativa_id
       JOIN tb_lkp_status_agendamentos sa
         ON sa.id_status = ac.status_agendamento_id
       WHERE c.ativo = TRUE
@@ -248,6 +254,10 @@ public class AgendamentoMoradorGatewayImpl
         .dataInicio(data(rs, "data_inicio"))
         .dataFim(data(rs, "data_fim"))
         .possuiRecorrencia(rs.getBoolean("possui_recorrencia"))
+        .solicitadoPorUsuarioId(rs.getObject("solicitado_por_usuario_id", Integer.class))
+        .origemSolicitacao(rs.getString("origem_solicitacao"))
+        .cooperativaNome(rs.getString("nome_cooperativa"))
+        .condominioNome(rs.getString("nome_condominio"))
         .build();
   }
 

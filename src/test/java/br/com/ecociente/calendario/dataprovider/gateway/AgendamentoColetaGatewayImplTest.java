@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -179,6 +181,89 @@ public class AgendamentoColetaGatewayImplTest {
       Optional<AgendamentoColeta> resultado = agendamentoColetaGateway.buscarProximoAgendamentoPorSindico(1, filtro);
       
       assertTrue(resultado.isEmpty());  
+    }
+  }
+
+  @Nested
+  @DisplayName("nomes da cooperativa e do condomínio")
+  class Nomes {
+
+    private AgendamentoColetaRepository.NomeProjecao nome(int id, String nome) {
+      return new AgendamentoColetaRepository.NomeProjecao() {
+        @Override
+        public Integer getId() {
+          return id;
+        }
+
+        @Override
+        public String getNome() {
+          return nome;
+        }
+      };
+    }
+
+    @Test
+    @DisplayName("Deve buscar os nomes uma vez por página, e não um por agendamento")
+    void shouldFetchNamesOncePerPage() {
+      AgendamentoColetaEntity outraEntity = AgendamentoColetaEntity.builder().id(2).build();
+      AgendamentoColeta outro = AgendamentoColeta.builder()
+          .id(2)
+          .condominioId(11)
+          .cooperativaId(20)
+          .statusAgendamento(StatusType.CONFIRMADO)
+          .build();
+
+      when(agendamentoColetaRepository.buscarPorSindico(any(),any(),any(),any(),any(),any(),any(),any()))
+        .thenReturn(new PageImpl<>(List.of(entity, outraEntity)));
+      when(agendamentoColetaMapper.toDomain(entity)).thenReturn(domain);
+      when(agendamentoColetaMapper.toDomain(outraEntity)).thenReturn(outro);
+      when(agendamentoColetaRepository.nomesDeCooperativas(List.of(20)))
+        .thenReturn(List.of(nome(20, "Cooperativa Verde")));
+      when(agendamentoColetaRepository.nomesDeCondominios(List.of(10, 11)))
+        .thenReturn(List.of(nome(10, "Residencial Eco"), nome(11, "Condomínio Sol")));
+
+      Page<AgendamentoColeta> resultado = agendamentoColetaGateway.buscarPorSindico(
+          1, new AgendamentoFiltro(null,null,null,null,null,null), PageRequest.of(0, 10));
+
+      assertEquals("Cooperativa Verde", resultado.getContent().get(0).getCooperativaNome());
+      assertEquals("Cooperativa Verde", resultado.getContent().get(1).getCooperativaNome());
+      assertEquals("Residencial Eco", resultado.getContent().get(0).getCondominioNome());
+      assertEquals("Condomínio Sol", resultado.getContent().get(1).getCondominioNome());
+
+      verify(agendamentoColetaRepository, times(1)).nomesDeCooperativas(any());
+      verify(agendamentoColetaRepository, times(1)).nomesDeCondominios(any());
+    }
+
+    @Test
+    @DisplayName("Não deve buscar nomes quando a página está vazia")
+    void shouldSkipNamesWhenPageIsEmpty() {
+      when(agendamentoColetaRepository.buscarPorCooperativa(any(),any(),any(),any(),any(),any(),any()))
+        .thenReturn(new PageImpl<>(List.of()));
+
+      agendamentoColetaGateway.buscarPorCooperativa(
+          2, new AgendamentoFiltro(null,null,null,null,null,null), PageRequest.of(0, 10));
+
+      verify(agendamentoColetaRepository, never()).nomesDeCooperativas(any());
+      verify(agendamentoColetaRepository, never()).nomesDeCondominios(any());
+    }
+
+    @Test
+    @DisplayName("Deve acrescentar os nomes ao próximo agendamento")
+    void shouldAddNamesToNextAppointment() {
+      when(agendamentoColetaRepository.buscarProximoAgendamentoPorSindico(any(),any(),any(),any(),any(),any()))
+        .thenReturn(Optional.of(entity));
+      when(agendamentoColetaMapper.toDomain(entity)).thenReturn(domain);
+      when(agendamentoColetaRepository.nomesDeCooperativas(List.of(20)))
+        .thenReturn(List.of(nome(20, "Cooperativa Verde")));
+      when(agendamentoColetaRepository.nomesDeCondominios(List.of(10)))
+        .thenReturn(List.of(nome(10, "Residencial Eco")));
+
+      Optional<AgendamentoColeta> resultado = agendamentoColetaGateway.buscarProximoAgendamentoPorSindico(
+          1, new AgendamentoFiltro(null,null,null,null,null,null));
+
+      assertTrue(resultado.isPresent());
+      assertEquals("Cooperativa Verde", resultado.get().getCooperativaNome());
+      assertEquals("Residencial Eco", resultado.get().getCondominioNome());
     }
   }
 }

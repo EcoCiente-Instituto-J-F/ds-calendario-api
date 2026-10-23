@@ -23,5 +23,9 @@ public class AgendamentoColeta {
   private LocalDateTime dataInicio;
   private LocalDateTime dataFim;
   private Boolean possuiRecorrencia;
+  private String origemSolicitacao;
+  private Integer solicitadoPorUsuarioId;
+  private String cooperativaNome;
+  private String condominioNome;
 
 }

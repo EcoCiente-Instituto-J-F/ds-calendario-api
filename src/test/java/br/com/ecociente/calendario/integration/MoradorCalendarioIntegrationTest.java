@@ -452,4 +452,26 @@ class MoradorCalendarioIntegrationTest {
       return new DataSourceTransactionManager(dataSource);
     }
   }
+
+  @Test
+  void deveInformarOrigemSolicitanteENomes() throws Exception {
+    mvc.perform(get("/api/v1/agendamentos")
+        .header("Authorization", bearer(70))
+        .param("size", "20")
+        .param("sort", "id,asc"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.content[0].origemSolicitacao").value("COOPERATIVA"))
+        .andExpect(jsonPath("$.content[0].solicitadoPorUsuarioId").value(20))
+        .andExpect(jsonPath("$.content[0].cooperativaNome").value("Cooperativa Um"))
+        .andExpect(jsonPath("$.content[0].condominioNome").value("Condomínio Um"));
+  }
+
+  @Test
+  void proximoAgendamentoTambemDeveTrazerNomes() throws Exception {
+    mvc.perform(get("/api/v1/agendamentos/proxima")
+        .header("Authorization", bearer(70)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.cooperativaNome").value("Cooperativa Um"))
+        .andExpect(jsonPath("$.condominioNome").value("Condomínio Um"));
+  }
 }
