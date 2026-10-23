@@ -21,7 +21,11 @@ public class CalendarioResponseMapper {
         domain.getDataInicio(),
         domain.getDataFim(),
         domain.getStatusAgendamento(),
-        domain.getPossuiRecorrencia());
+        domain.getPossuiRecorrencia(),
+        domain.getOrigemSolicitacao(),
+        domain.getSolicitadoPorUsuarioId(),
+        domain.getCooperativaNome(),
+        domain.getCondominioNome());
 
   }
 }

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "dim_status_agendamento")
+@Table(name = "tb_lkp_status_agendamentos")
 @Getter
 @Setter
 @NoArgsConstructor

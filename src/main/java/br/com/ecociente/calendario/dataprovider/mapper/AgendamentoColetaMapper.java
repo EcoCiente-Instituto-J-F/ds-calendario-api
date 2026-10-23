@@ -23,6 +23,8 @@ public class AgendamentoColetaMapper {
         .dataInicio(entity.getDataInicio())
         .dataFim(entity.getDataFim())
         .possuiRecorrencia(entity.getPossuiRecorrencia())
+        .origemSolicitacao(entity.getOrigemSolicitacao())
+        .solicitadoPorUsuarioId(entity.getSolicitadoPorUsuarioId())
         .build();
   }
 
@@ -39,6 +41,8 @@ public class AgendamentoColetaMapper {
         .dataInicio(domain.getDataInicio())
         .dataFim(domain.getDataFim())
         .possuiRecorrencia(domain.getPossuiRecorrencia())
+        .origemSolicitacao(domain.getOrigemSolicitacao())
+        .solicitadoPorUsuarioId(domain.getSolicitadoPorUsuarioId())
         .build();
   }
 
