@@ -61,6 +61,27 @@ public record CalendarioResponseDto(
     description = "Indica se o agendamento possui recorrência",
     example = "false"
   )
-  Boolean possuiRecorrencia
+  Boolean possuiRecorrencia,
+  @Schema(
+    description = "Quem pediu a coleta",
+    example = "CONDOMINIO",
+    allowableValues = {"CONDOMINIO", "COOPERATIVA"}
+  )
+  String origemSolicitacao,
+  @Schema(
+    description = "Usuário que pediu a coleta. Ele não pode responder nem cancelar o próprio pedido",
+    example = "7"
+  )
+  Integer solicitadoPorUsuarioId,
+  @Schema(
+    description = "Nome da cooperativa",
+    example = "Cooperativa Verde"
+  )
+  String cooperativaNome,
+  @Schema(
+    description = "Nome do condomínio",
+    example = "Residencial Eco"
+  )
+  String condominioNome
 ) {
 }

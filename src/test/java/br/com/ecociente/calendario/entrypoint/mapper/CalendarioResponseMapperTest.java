@@ -54,4 +54,31 @@ class CalendarioResponseMapperTest {
   void shouldReturnNullWhenDomainIsNull() {
     assertNull(mapper.toResponseDto(null));
   }
+
+  @Test
+  @DisplayName("Deve mapear a origem do pedido e os nomes")
+  void shouldMapOriginAndNames() {
+    domain.setOrigemSolicitacao("CONDOMINIO");
+    domain.setSolicitadoPorUsuarioId(7);
+    domain.setCooperativaNome("Cooperativa Verde");
+    domain.setCondominioNome("Residencial Eco");
+
+    CalendarioResponseDto dto = mapper.toResponseDto(domain);
+
+    assertEquals("CONDOMINIO", dto.origemSolicitacao());
+    assertEquals(7, dto.solicitadoPorUsuarioId());
+    assertEquals("Cooperativa Verde", dto.cooperativaNome());
+    assertEquals("Residencial Eco", dto.condominioNome());
+  }
+
+  @Test
+  @DisplayName("Deve deixar os campos novos nulos quando o agendamento não os tem")
+  void shouldKeepNewFieldsNullWhenMissing() {
+    CalendarioResponseDto dto = mapper.toResponseDto(domain);
+
+    assertNull(dto.origemSolicitacao());
+    assertNull(dto.solicitadoPorUsuarioId());
+    assertNull(dto.cooperativaNome());
+    assertNull(dto.condominioNome());
+  }
 }

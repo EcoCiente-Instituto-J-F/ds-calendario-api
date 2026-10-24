@@ -62,4 +62,16 @@ public class AgendamentoColetaEntity {
   @Column(name = "possui_recorrencia", nullable = false)
   private Boolean possuiRecorrencia;
 
+  /**
+   * Quem pediu a coleta: CONDOMINIO ou COOPERATIVA
+   */
+  @Column(name = "origem_solicitacao", length = 20)
+  private String origemSolicitacao;
+
+  /**
+   * Usuário que pediu a coleta
+   */
+  @Column(name = "solicitado_por_usuario_id")
+  private Integer solicitadoPorUsuarioId;
+
 }

@@ -111,4 +111,28 @@ class AgendamentoColetaMapperTest {
       assertNull(mapper.toEntity(null));
     }
   }
+
+  @Test
+  @DisplayName("Deve levar origem e solicitante da entity para o domain")
+  void shouldCarryOriginToDomain() {
+    entity.setOrigemSolicitacao("COOPERATIVA");
+    entity.setSolicitadoPorUsuarioId(20);
+
+    AgendamentoColeta resultado = mapper.toDomain(entity);
+
+    assertEquals("COOPERATIVA", resultado.getOrigemSolicitacao());
+    assertEquals(20, resultado.getSolicitadoPorUsuarioId());
+  }
+
+  @Test
+  @DisplayName("Deve levar origem e solicitante do domain para a entity, sem apagá-los ao salvar")
+  void shouldCarryOriginToEntity() {
+    domain.setOrigemSolicitacao("CONDOMINIO");
+    domain.setSolicitadoPorUsuarioId(7);
+
+    AgendamentoColetaEntity resultado = mapper.toEntity(domain);
+
+    assertEquals("CONDOMINIO", resultado.getOrigemSolicitacao());
+    assertEquals(7, resultado.getSolicitadoPorUsuarioId());
+  }
 }
