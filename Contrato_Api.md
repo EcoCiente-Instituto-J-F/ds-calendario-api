@@ -1,3 +1,18 @@
+# Contrato da API
+
+## Implementado
+
+Prefixo: `/api/v1/agendamentos`. Todas as rotas exigem JWT; `POST` e `PATCH` exigem o perfil `SINDICO` ou `COOPERATIVA`.
+
+| Método | Endpoint                                  | Objetivo                                                                 |
+| ------ | ----------------------------------------- | ------------------------------------------------------------------------ |
+| GET    | `/api/v1/agendamentos`                    | Listar agendamentos (filtros: `status`, `dataInicio`, `dataFim`, `possuiRecorrencia`, `condominioId`, `cooperativaId`) |
+| GET    | `/api/v1/agendamentos/proxima`            | Próxima coleta (mesmos filtros, exceto `status`)                         |
+| POST   | `/api/v1/agendamentos`                    | Criar agendamento                                                        |
+| PATCH  | `/api/v1/agendamentos/{id}/status`        | Alterar status                                                           |
+
+## Previsto (ainda não implementado)
+
 | Método | Endpoint                         | Objetivo                       |
 | ------ | -------------------------------- | ------------------------------ |
 | GET    | `/calendario`                    | Listar calendário de coletas   |
