@@ -77,12 +77,12 @@ public class AgendamentoController {
     @RequestParam(required = false) Boolean possuiRecorrencia,
 
     @Parameter(
-      description = "Filtra por condominio. Para SINDICO, o filtro é aplicado somente entre os condomínios vinculados ao usuário autenticado",
+      description = "Filtra por condominio. Para SINDICO e MORADOR, o filtro é aplicado somente entre os condomínios vinculados ao usuário autenticado",
       example = "10")
     @RequestParam(required = false) Integer condominioId,
 
     @Parameter(
-      description = "Filtra pela cooperativa responsável. Para SINDICO o resultado continua limitado aos condomínios vinculados ao usuário autenticado",
+      description = "Filtra pela cooperativa responsável. Para SINDICO e MORADOR o resultado continua limitado aos condomínios vinculados ao usuário autenticado",
       example = "5")
     @RequestParam(required = false) Integer cooperativaId,
 

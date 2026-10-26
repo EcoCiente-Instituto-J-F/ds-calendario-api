@@ -1,73 +1,82 @@
-# Código de Conduta
+# Código de Conduta do Contributor Covenant
 
 ## Nosso Compromisso
 
-Nós, como membros, colaboradores e mantenedores, nos comprometemos a fazer da participação neste projeto uma experiência livre de assédio para todas as pessoas, independentemente de idade, tamanho corporal, deficiência, etnia, identidade ou expressão de gênero, nível de experiência, nacionalidade, aparência pessoal, raça, religião, orientação sexual ou qualquer outra característica.
+Nós, como membros, contribuidores e líderes, nos comprometemos a fazer da participação em nossa comunidade uma experiência livre de assédio para todas as pessoas, independentemente de idade, tamanho corporal, deficiência visível ou invisível, etnia, características sexuais, identidade e expressão de gênero, nível de experiência, educação, status socioeconômico, nacionalidade, aparência pessoal, raça, religião ou identidade e orientação sexual.
 
-Nos comprometemos a agir e interagir de forma que contribua para uma comunidade aberta, acolhedora, diversa, inclusiva e saudável.
+Comprometemo-nos a agir e interagir de maneiras que contribuam para uma comunidade aberta, acolhedora, diversa, inclusiva e saudável.
 
 ## Nossos Padrões
 
 Exemplos de comportamentos que contribuem para um ambiente positivo:
 
-* Demonstrar empatia e gentileza com as outras pessoas;
-* Respeitar opiniões, pontos de vista e experiências diferentes;
-* Dar e receber feedback construtivo, com humildade;
-* Assumir responsabilidade pelos erros, pedir desculpas a quem foi afetado e aprender com a experiência;
-* Priorizar o que é melhor para a comunidade como um todo, e não apenas para o interesse individual.
+* Demonstrar empatia e bondade com outras pessoas
+* Respeitar opiniões, pontos de vista e experiências diferentes
+* Dar e receber feedbacks construtivos de forma respeitosa
+* Assumir responsabilidade, pedir desculpas às pessoas afetadas por nossos erros e aprender com a experiência
+* Focar no que é melhor não apenas para nós como indivíduos, mas para toda a comunidade
 
 Exemplos de comportamentos inaceitáveis:
 
-* Uso de linguagem ou imagens sexualizadas, e atenção sexual ou avanços indesejados de qualquer natureza;
-* Trolagem, comentários insultuosos ou depreciativos e ataques pessoais ou políticos;
-* Assédio público ou privado;
-* Publicar informações privadas de outras pessoas, como endereços, e-mails, telefones, CPF ou dados de acesso, sem permissão explícita;
-* Qualquer outra conduta que possa ser considerada inadequada em um ambiente profissional.
+* O uso de linguagem ou imagens sexualizadas e atenção ou avanços sexuais de qualquer natureza
+* Trolling, comentários insultuosos ou depreciativos e ataques pessoais ou políticos
+* Assédio público ou privado
+* Publicar informações privadas de outras pessoas, como endereço físico ou de e-mail, sem permissão explícita
+* Outras condutas que poderiam razoavelmente ser consideradas inapropriadas em um ambiente profissional
 
 ## Responsabilidades de Aplicação
 
-Os mantenedores do projeto são responsáveis por esclarecer e aplicar estes padrões de comportamento aceitável e devem tomar ações corretivas justas e proporcionais diante de qualquer conduta considerada inaceitável.
+Os líderes da comunidade são responsáveis por esclarecer e aplicar nossos padrões de comportamento aceitável e tomarão ações corretivas apropriadas e justas em resposta a qualquer comportamento que considerem impróprio, ameaçador, ofensivo ou prejudicial.
 
-Os mantenedores têm o direito e a responsabilidade de remover, editar ou rejeitar comentários, commits, código, issues e outras contribuições que não estejam alinhadas a este Código de Conduta, e de banir temporariamente ou permanentemente qualquer participante por condutas que considerem inadequadas, ameaçadoras, ofensivas ou nocivas.
+Os líderes da comunidade têm o direito e a responsabilidade de remover, editar ou rejeitar comentários, commits, código, edições de wiki, issues e outras contribuições que não estejam alinhadas a este Código de Conduta, e comunicarão os motivos de suas decisões de moderação quando apropriado.
 
 ## Escopo
 
-Este Código de Conduta se aplica a todos os espaços do projeto, incluindo issues, Pull Requests, comentários, discussões e qualquer outro canal de comunicação relacionado ao repositório, bem como à participação de uma pessoa que esteja representando o projeto em público.
+Este Código de Conduta se aplica a todos os espaços da comunidade e também a espaços públicos quando uma pessoa representa oficialmente a comunidade. Exemplos incluem usar um endereço de e-mail oficial, postar por meio de uma conta oficial em redes sociais ou atuar como representante designado em um evento online ou presencial.
 
 ## Aplicação
 
-Casos de comportamento abusivo, de assédio ou de outra forma inaceitável podem ser reportados à equipe do projeto pelo e-mail **ecociente.jef@gmail.com**. Todas as denúncias serão analisadas e investigadas de forma justa e imparcial.
+Casos de comportamento abusivo, de assédio ou de outra forma inaceitável podem ser relatados aos líderes da comunidade responsáveis pela aplicação, pelo e-mail **<ecociente.jef@gmail.com>**. Todas as denúncias serão analisadas e investigadas de forma rápida e justa.
 
-Os mantenedores devem respeitar a privacidade e a segurança de quem fez a denúncia. Os detalhes do caso serão divulgados apenas na medida necessária para investigar e resolver a situação.
+Todos os líderes da comunidade são obrigados a respeitar a privacidade e a segurança de quem relatar um incidente.
 
 ## Diretrizes de Aplicação
 
-Os mantenedores seguem as diretrizes abaixo para determinar as consequências de uma conduta considerada inadequada. Elas são inspiradas na escada de aplicação do Mozilla Community Participation Guidelines.
+Os líderes da comunidade seguirão estas Diretrizes de Impacto na Comunidade para determinar as consequências de qualquer ação que considerem violadora deste Código de Conduta:
 
 ### 1. Correção
 
-**Impacto na comunidade:** uso de linguagem imprecisa ou outra conduta considerada inadequada, sem consequências de longo prazo.
+**Impacto na comunidade**: uso de linguagem inapropriada ou outro comportamento considerado não profissional ou indesejável na comunidade.
 
-**Consequência:** uma advertência particular e por escrito, com esclarecimento sobre a natureza da violação e uma explicação de por que o comportamento era inadequado. Uma retratação pública pode ser solicitada.
+**Consequência**: uma notificação privada e por escrito dos líderes da comunidade, esclarecendo a natureza da violação e explicando por que o comportamento foi inapropriado. Um pedido de desculpas público pode ser solicitado.
 
 ### 2. Advertência
 
-**Impacto na comunidade:** uma violação com consequências maiores, por meio de uma única ação ou de uma série de ações.
+**Impacto na comunidade**: uma violação por meio de um único incidente ou de uma série de ações.
 
-**Consequência:** uma advertência com restrições de interação com a comunidade, incluindo acompanhamento de comunicações, por um período determinado. Isso inclui evitar interações não solicitadas com as pessoas envolvidas, mesmo em canais de moderação. Violações adicionais podem levar a um banimento temporário.
+**Consequência**: uma advertência com consequências para comportamento continuado. Nenhuma interação com as pessoas envolvidas, incluindo interação não solicitada com quem aplica este Código de Conduta, por um período determinado. Isso inclui evitar interações em espaços da comunidade e em canais externos como redes sociais. A violação destes termos pode levar a um banimento temporário ou permanente.
 
 ### 3. Banimento Temporário
 
-**Impacto na comunidade:** uma violação grave de padrões, incluindo assédio sustentado ou intimidação de uma pessoa ou de um grupo.
+**Impacto na comunidade**: uma violação grave dos padrões da comunidade, incluindo comportamento impróprio sustentado.
 
-**Consequência:** um banimento temporário de qualquer forma de interação ou comunicação pública com a comunidade por um período determinado. Não é permitida interação pública nem privada com as pessoas envolvidas durante esse período. Violações adicionais durante o banimento podem levar a um banimento permanente.
+**Consequência**: um banimento temporário de qualquer tipo de interação ou comunicação pública com a comunidade por um período determinado. Durante esse período, não são permitidas interações públicas ou privadas com as pessoas envolvidas, incluindo interações não solicitadas com quem aplica este Código de Conduta. A violação destes termos pode levar a um banimento permanente.
 
 ### 4. Banimento Permanente
 
-**Impacto na comunidade:** demonstração de padrões de violação, incluindo assédio sustentado, intimidação ou agressão de uma pessoa ou de um grupo, ou violação grave de padrões.
+**Impacto na comunidade**: demonstrar um padrão de violação dos padrões da comunidade, incluindo comportamento impróprio sustentado, assédio a uma pessoa ou agressão e depreciação de grupos de pessoas.
 
-**Consequência:** um banimento permanente de qualquer forma de interação pública com a comunidade.
+**Consequência**: um banimento permanente de qualquer tipo de interação pública dentro da comunidade.
 
 ## Atribuição
 
-Este Código de Conduta foi adaptado a partir do [Contributor Covenant](https://www.contributor-covenant.org), versão 2.1, disponível em <https://www.contributor-covenant.org/version/2/1/code_of_conduct.html>. A escada de diretrizes de aplicação foi inspirada nas [Diretrizes de Participação da Mozilla](https://github.com/mozilla/diversity).
+Este Código de Conduta é adaptado do [Contributor Covenant][homepage], versão 2.1, disponível em [https://www.contributor-covenant.org/pt-br/version/2/1/code_of_conduct.html][v2.1].
+
+As Diretrizes de Impacto na Comunidade foram inspiradas pela [escada de aplicação do código de conduta da Mozilla][Mozilla CoC].
+
+Para respostas a perguntas comuns sobre este código de conduta, veja a página de perguntas frequentes em [https://www.contributor-covenant.org/faq][FAQ].
+
+[homepage]: https://www.contributor-covenant.org
+[v2.1]: https://www.contributor-covenant.org/pt-br/version/2/1/code_of_conduct.html
+[Mozilla CoC]: https://github.com/mozilla/diversity
+[FAQ]: https://www.contributor-covenant.org/faq

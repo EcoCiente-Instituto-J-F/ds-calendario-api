@@ -19,7 +19,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
                                 API  para consulta de agendamnetos de coleta.
                                 O conteúdo retornado é definido pelo perfil do usuário autenticado:
                                 -SINDICO: agendamentos dos próprios condomínios;
-                                -COOPERATIVA: agendamentos associados á própria cooperativa
+                                -COOPERATIVA: agendamentos associados á própria cooperativa;
+                                -MORADOR: agendamentos do condomínio em que mora (somente consulta, com vínculo aprovado).
+                                Criar agendamento e alterar status é restrito a SINDICO e COOPERATIVA.
                                 """,
                 contact = @Contact(
                         name = "Equipe EcoCiente")),
