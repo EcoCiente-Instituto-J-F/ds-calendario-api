@@ -37,3 +37,9 @@ k8s/secret.yaml
 
 # Compiled classes
 bin/
+
+# Arquivos compilados
+bin/
+target/
+build/
+*.class
