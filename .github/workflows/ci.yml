@@ -22,7 +22,7 @@ jobs:
   build-and-test:
     name: Build e testes
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     timeout-minutes: 15
 
@@ -63,6 +63,16 @@ jobs:
 
       - name: Configurar Gradle
         uses: gradle/actions/setup-gradle@v6
+
+      - name: Verificar o Docker do runner
+        run: |
+          docker version
+          docker info
+
+      - name: Configurar Docker Java para Testcontainers
+        run: |
+          mkdir -p src/test/resources
+          printf '%s\n' 'api.version=1.44' > src/test/resources/docker-java.properties
 
       - name: Dar permissao ao Gradle Wrapper
         run: chmod +x gradlew
